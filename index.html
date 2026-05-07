@@ -1,417 +1,412 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Sordum VPN — быстрый VPN</title>
+  <title>Sordum VPN — быстрый VPN без регистрации</title>
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="favicon.png">
+  <!-- ИКОНКА ВО ВКЛАДКЕ -->
+  <link rel="icon" type="image/png" href="favicon.png">
 
-    <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:Arial, sans-serif;
-        }
+  <style>
+    :root{
+      --bg:#eef8ff;--bg2:#dff3ff;--text:#092238;--muted:#5d7182;--blue:#1598ff;--blue2:#046ce8;--cyan:#54d4ff;--card:#ffffffcc;--line:#c8e9ff;--dark:#071b2d;
+      --shadow:0 24px 70px rgba(5,83,150,.16);--radius:28px;
+    }
 
-        body{
-            background:#061120;
-            color:white;
-            overflow-x:hidden;
-        }
+    *{
+      box-sizing:border-box
+    }
 
-        header{
-            width:100%;
-            padding:20px 80px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            position:fixed;
-            top:0;
-            backdrop-filter:blur(10px);
-            background:rgba(0,0,0,0.2);
-            z-index:1000;
-        }
+    html{
+      scroll-behavior:smooth
+    }
 
-        .logo{
-            display:flex;
-            align-items:center;
-            gap:12px;
-            font-size:24px;
-            font-weight:bold;
-        }
+    body{
+      margin:0;
+      font-family:Inter,Segoe UI,Arial,sans-serif;
+      color:var(--text);
+      background:
+      radial-gradient(circle at 12% 5%,#bfeaff 0 28%,transparent 45%),
+      radial-gradient(circle at 90% 10%,#d8f4ff 0 24%,transparent 42%),
+      linear-gradient(180deg,var(--bg),#fff);
+      overflow-x:hidden
+    }
 
-        .logo img{
-            width:42px;
-            height:42px;
-            border-radius:12px;
-        }
+    a{
+      text-decoration:none;
+      color:inherit
+    }
 
-        nav a{
-            color:white;
-            text-decoration:none;
-            margin-left:30px;
-            transition:0.3s;
-        }
+    .wrap{
+      width:min(1160px,calc(100% - 32px));
+      margin:0 auto
+    }
 
-        nav a:hover{
-            color:#4db8ff;
-        }
+    .nav{
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(20px);
+      background:rgba(239,249,255,.72);
+      border-bottom:1px solid rgba(149,211,248,.4)
+    }
 
-        .hero{
-            min-height:100vh;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            text-align:center;
-            padding:120px 20px 60px;
-            background:
-            radial-gradient(circle at top,#1d8fff55,transparent 40%),
-            #061120;
-        }
+    .navin{
+      height:76px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between
+    }
 
-        .hero-content{
-            max-width:850px;
-        }
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      font-weight:900;
+      font-size:22px;
+      letter-spacing:-.5px
+    }
 
-        .hero h1{
-            font-size:72px;
-            margin-bottom:20px;
-            line-height:1.1;
-        }
+    .mark{
+      width:42px;
+      height:42px;
+      border-radius:14px;
+      background:linear-gradient(135deg,var(--blue),var(--cyan));
+      display:grid;
+      place-items:center;
+      color:white;
+      box-shadow:0 12px 30px rgba(21,152,255,.3)
+    }
 
-        .hero p{
-            font-size:22px;
-            color:#b8d7ff;
-            margin-bottom:40px;
-        }
+    .links{
+      display:flex;
+      gap:28px;
+      color:#426174;
+      font-weight:700
+    }
 
-        .buttons{
-            display:flex;
-            justify-content:center;
-            gap:20px;
-            flex-wrap:wrap;
-        }
+    .navbtn{
+      padding:12px 18px;
+      border-radius:999px;
+      background:var(--dark);
+      color:white;
+      font-weight:800;
+      box-shadow:0 12px 30px rgba(7,27,45,.18)
+    }
 
-        .btn{
-            padding:16px 34px;
-            border-radius:14px;
-            text-decoration:none;
-            font-size:18px;
-            font-weight:bold;
-            transition:0.3s;
-        }
+    .hero{
+      padding:86px 0 70px
+    }
 
-        .btn-primary{
-            background:#3aa8ff;
-            color:white;
-            box-shadow:0 0 25px #3aa8ff55;
-        }
+    .grid{
+      display:grid;
+      grid-template-columns:1.03fr .97fr;
+      gap:42px;
+      align-items:center
+    }
 
-        .btn-primary:hover{
-            transform:translateY(-3px);
-            background:#58b7ff;
-        }
+    .pill{
+      display:inline-flex;
+      gap:8px;
+      align-items:center;
+      padding:10px 14px;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:999px;
+      color:#2473a2;
+      font-weight:800;
+      box-shadow:0 10px 30px rgba(5,83,150,.07)
+    }
 
-        .btn-secondary{
-            border:2px solid #3aa8ff;
-            color:white;
-        }
+    h1{
+      font-size:clamp(44px,7vw,84px);
+      line-height:.95;
+      margin:22px 0 20px;
+      letter-spacing:-4px
+    }
 
-        .btn-secondary:hover{
-            background:#3aa8ff22;
-        }
+    .grad{
+      background:linear-gradient(90deg,var(--blue2),var(--cyan));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent
+    }
 
-        section{
-            padding:100px 20px;
-        }
+    .lead{
+      font-size:20px;
+      line-height:1.65;
+      color:var(--muted);
+      max-width:620px;
+      margin:0 0 30px
+    }
 
-        .section-title{
-            text-align:center;
-            font-size:48px;
-            margin-bottom:60px;
-        }
+    .cta{
+      display:flex;
+      gap:14px;
+      flex-wrap:wrap
+    }
 
-        .features{
-            display:grid;
-            grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-            gap:25px;
-            max-width:1200px;
-            margin:auto;
-        }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:16px 22px;
+      border-radius:16px;
+      font-weight:900;
+      border:1px solid transparent;
+      transition:.2s;
+      cursor:pointer
+    }
 
-        .feature{
-            background:#0b1b30;
-            padding:35px;
-            border-radius:24px;
-            border:1px solid #18314d;
-            transition:0.3s;
-        }
+    .btn:hover{
+      transform:translateY(-2px)
+    }
 
-        .feature:hover{
-            transform:translateY(-5px);
-            border-color:#3aa8ff;
-        }
+    .primary{
+      background:linear-gradient(135deg,var(--blue),var(--blue2));
+      color:white;
+      box-shadow:0 18px 45px rgba(21,152,255,.28)
+    }
 
-        .feature h3{
-            margin-bottom:15px;
-            font-size:24px;
-        }
+    .secondary{
+      background:white;
+      color:#0c5689;
+      border-color:var(--line)
+    }
 
-        .feature p{
-            color:#b8d7ff;
-            line-height:1.6;
-        }
+    .note{
+      margin-top:18px;
+      color:#6b8191;
+      font-size:14px
+    }
 
-        .pricing{
-            display:flex;
-            justify-content:center;
-            gap:30px;
-            flex-wrap:wrap;
-        }
+    .device{
+      position:relative;
+      min-height:520px;
+      border-radius:42px;
+      background:linear-gradient(145deg,#fff,#dff5ff);
+      box-shadow:var(--shadow);
+      padding:24px;
+      overflow:hidden;
+      border:1px solid #fff
+    }
 
-        .plan{
-            background:#0b1b30;
-            width:340px;
-            padding:40px;
-            border-radius:28px;
-            border:1px solid #18314d;
-            transition:0.3s;
-        }
+    .device:before{
+      content:"";
+      position:absolute;
+      inset:-80px -80px auto auto;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      background:rgba(84,212,255,.35);
+      filter:blur(8px)
+    }
 
-        .plan:hover{
-            transform:translateY(-5px);
-            border-color:#3aa8ff;
-        }
+    .screen{
+      position:relative;
+      height:100%;
+      min-height:470px;
+      border-radius:34px;
+      background:linear-gradient(180deg,#08233a,#061526);
+      color:white;
+      padding:26px;
+      overflow:hidden
+    }
 
-        .plan h2{
-            font-size:32px;
-            margin-bottom:10px;
-        }
+    .orb{
+      position:absolute;
+      width:270px;
+      height:270px;
+      border-radius:50%;
+      background:radial-gradient(circle,#42caff 0 4%,rgba(21,152,255,.24) 5% 45%,transparent 70%);
+      right:-30px;
+      top:54px;
+      box-shadow:0 0 70px rgba(66,202,255,.35)
+    }
 
-        .price{
-            font-size:54px;
-            margin-bottom:20px;
-            color:#4db8ff;
-        }
+    .status{
+      position:relative;
+      display:flex;
+      justify-content:space-between;
+      align-items:center
+    }
 
-        .plan ul{
-            list-style:none;
-            margin-bottom:35px;
-        }
+    .chip{
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.1);
+      border:1px solid rgba(255,255,255,.12);
+      font-weight:800;
+      font-size:13px
+    }
 
-        .plan ul li{
-            margin-bottom:14px;
-            color:#cce6ff;
-        }
+    .bigcircle{
+      position:relative;
+      margin:70px auto 34px;
+      width:190px;
+      height:190px;
+      border-radius:50%;
+      background:linear-gradient(135deg,#1598ff,#54d4ff);
+      display:grid;
+      place-items:center;
+      box-shadow:0 0 70px rgba(84,212,255,.42)
+    }
 
-        .faq{
-            max-width:900px;
-            margin:auto;
-        }
+    .power{
+      font-size:54px
+    }
 
-        .faq-item{
-            background:#0b1b30;
-            padding:30px;
-            border-radius:20px;
-            margin-bottom:20px;
-        }
+    .rows{
+      position:relative;
+      display:grid;
+      gap:14px
+    }
 
-        .faq-item h3{
-            margin-bottom:10px;
-            font-size:24px;
-        }
+    .row{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:16px;
+      border-radius:18px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.1)
+    }
 
-        .faq-item p{
-            color:#b8d7ff;
-            line-height:1.6;
-        }
+    .bar{
+      height:8px;
+      width:120px;
+      border-radius:999px;
+      background:linear-gradient(90deg,#54d4ff,#1598ff)
+    }
 
-        footer{
-            padding:40px;
-            text-align:center;
-            color:#8ea8c7;
-            border-top:1px solid #18314d;
-        }
+    @media(max-width:900px){
+      .grid{
+        grid-template-columns:1fr
+      }
 
-        @media(max-width:768px){
+      .links{
+        display:none
+      }
 
-            header{
-                padding:20px;
-            }
-
-            nav{
-                display:none;
-            }
-
-            .hero h1{
-                font-size:48px;
-            }
-
-            .hero p{
-                font-size:18px;
-            }
-
-            .section-title{
-                font-size:38px;
-            }
-        }
-    </style>
+      h1{
+        letter-spacing:-2px
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<header>
+<header class="nav">
+  <div class="wrap navin">
 
-    <div class="logo">
-        <img src="favicon.png" alt="">
-        <span>Sordum VPN</span>
-    </div>
+    <a href="#" class="logo">
+      <span class="mark">◆</span>
+      Sordum VPN
+    </a>
 
-    <nav>
-        <a href="#features">Преимущества</a>
-        <a href="#pricing">Тарифы</a>
-        <a href="#faq">FAQ</a>
+    <nav class="links">
+      <a href="#features">Плюсы</a>
+      <a href="#pricing">Тарифы</a>
+      <a href="#faq">FAQ</a>
     </nav>
 
+    <a class="navbtn" href="Sordum.rar" download>
+      Скачать
+    </a>
+
+  </div>
 </header>
+
+<main>
 
 <section class="hero">
 
-    <div class="hero-content">
+<div class="wrap grid">
 
-        <h1>Быстрый и безопасный VPN</h1>
+<div>
 
-        <p>
-            Высокая скорость, стабильное соединение и приватность без регистрации.
-        </p>
+<div class="pill">
+🛡️ VPN без регистрации и лишних действий
+</div>
 
-        <div class="buttons">
+<h1>
+Быстрый VPN для
+<span class="grad">свободного интернета</span>
+</h1>
 
-            <a href="Sordum.rar" download class="btn btn-primary">
-                Скачать VPN
-            </a>
+<p class="lead">
+Sordum VPN помогает быстро подключиться, защитить соединение и пользоваться нужными сайтами без сложных настроек.
+</p>
 
-            <a href="#pricing" class="btn btn-secondary">
-                Тарифы
-            </a>
+<div class="cta">
 
-        </div>
+<a class="btn primary" href="Sordum.rar" download>
+⬇ Скачать Sordum.rar
+</a>
 
-    </div>
+<a class="btn secondary" href="#pricing">
+Выбрать тариф
+</a>
 
-</section>
+</div>
 
-<section id="features">
+<div class="note">
+Файл должен лежать рядом с этим HTML и называться <b>Sordum.rar</b>.
+</div>
 
-    <h2 class="section-title">Почему Sordum VPN?</h2>
+</div>
 
-    <div class="features">
+<div class="device">
 
-        <div class="feature">
-            <h3>Высокая скорость</h3>
-            <p>
-                Быстрые сервера для комфортного серфинга, игр и просмотра видео.
-            </p>
-        </div>
+<div class="screen">
 
-        <div class="feature">
-            <h3>Приватность</h3>
-            <p>
-                Ваш IP скрывается, а соединение защищается современным шифрованием.
-            </p>
-        </div>
+<div class="orb"></div>
 
-        <div class="feature">
-            <h3>Без регистрации</h3>
-            <p>
-                Никаких аккаунтов и подтверждений — скачал и используешь.
-            </p>
-        </div>
+<div class="status">
+<span class="chip">Sordum Secure</span>
+<span class="chip">Protected</span>
+</div>
 
-    </div>
+<div class="bigcircle">
+<div class="power">⏻</div>
+</div>
 
-</section>
+<div class="rows">
 
-<section id="pricing">
+<div class="row">
+<span>Статус</span>
+<b>Подключено</b>
+</div>
 
-    <h2 class="section-title">Тарифы</h2>
+<div class="row">
+<span>Скорость</span>
+<span class="bar"></span>
+</div>
 
-    <div class="pricing">
+<div class="row">
+<span>Режим</span>
+<b>Без аккаунта</b>
+</div>
 
-        <div class="plan">
+<div class="row">
+<span>Сервер</span>
+<b>Auto</b>
+</div>
 
-            <h2>Free</h2>
+</div>
 
-            <div class="price">0₽</div>
+</div>
 
-            <ul>
-                <li>✔ Базовая скорость</li>
-                <li>✔ Бесплатные сервера</li>
-                <li>✔ Без регистрации</li>
-            </ul>
+</div>
 
-            <a href="Sordum.rar" download class="btn btn-secondary">
-                Скачать
-            </a>
-
-        </div>
-
-        <div class="plan">
-
-            <h2>Premium</h2>
-
-            <div class="price">199₽</div>
-
-            <ul>
-                <li>✔ Максимальная скорость</li>
-                <li>✔ Premium сервера</li>
-                <li>✔ Низкий пинг</li>
-                <li>✔ Приоритетное подключение</li>
-            </ul>
-
-            <a href="Sordum.rar" download class="btn btn-primary">
-                Купить
-            </a>
-
-        </div>
-
-    </div>
+</div>
 
 </section>
 
-<section id="faq" class="faq">
-
-    <h2 class="section-title">Частые вопросы</h2>
-
-    <div class="faq-item">
-        <h3>Быстрый ли VPN?</h3>
-        <p>
-            Да, Sordum VPN оптимизирован для высокой скорости и стабильного соединения.
-        </p>
-    </div>
-
-    <div class="faq-item">
-        <h3>Есть ли задержки?</h3>
-        <p>
-            Пинг и задержки минимальны при подключении к ближайшим серверам.
-        </p>
-    </div>
-
-    <div class="faq-item">
-        <h3>Данные остаются приватными?</h3>
-        <p>
-            Да, соединение защищено, а IP-адрес скрывается.
-        </p>
-    </div>
-
-</section>
-
-<footer>
-    © 2026 Sordum VPN. All rights reserved.
-</footer>
+</main>
 
 </body>
 </html>
